@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://i.ibb.co">
+    <link rel="preconnect" href="https://images.weserv.nl">
+    <link rel="dns-prefetch" href="https://images.pexels.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Page Not Found | Hoomanix Business Center</title>
+<meta name="description" content="The page you're looking for doesn't exist. Return to Hoomanix Business Center's homepage or explore our Dubai office spaces.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://hoomanix.com/404">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>html,body{overflow-x:hidden;max-width:100%}*{margin:0;padding:0;box-sizing:border-box}:root{--gold:#a67c52;--gold-light:#c49a6c;--gold-dark:#7a5538;--bg:#fefcf8;--dark:#1e1b16;--muted:#6b6457;--border:#e4ddd3}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);min-height:100vh;display:flex;flex-direction:column}nav{background:rgba(30,27,22,0.96);padding:18px 0}.nav-inner{max-width:1320px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between}.nav-inner img{height:42px}.nav-links{list-style:none;display:flex;gap:30px}.nav-links a{color:#e0e0e0;text-decoration:none;font-size:14px;font-weight:500}.nav-links a:hover{color:var(--gold-light)}main{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px}.code{font-family:'Playfair Display',serif;font-size:130px;font-weight:800;color:var(--gold);line-height:1;margin-bottom:10px}h1{font-family:'Playfair Display',serif;font-size:32px;margin-bottom:14px}p{color:var(--muted);font-size:16px;max-width:480px;margin:0 auto 32px;line-height:1.7}.btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:50px;text-decoration:none;font-weight:600;font-size:14px;transition:all .2s}.btn-primary{background:var(--gold);color:#fff}.btn-primary:hover{background:var(--gold-dark)}.btn-ghost{border:1.5px solid var(--border);color:var(--dark)}.btn-ghost:hover{border-color:var(--gold);color:var(--gold-dark)}.quick-links{margin-top:40px;font-size:14px;color:var(--muted)}.quick-links a{color:var(--gold-dark);text-decoration:none;margin:0 8px}.quick-links a:hover{text-decoration:underline}footer{background:var(--dark);color:#c9c9c9;text-align:center;padding:24px;font-size:13px}footer a{color:var(--gold-light);text-decoration:none}</style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <picture><source srcset="logo.webp" type="image/webp"><img src="logo.png" alt="Hoomanix Business Center Logo" decoding="async"></picture>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <div>
+        <div class="code">404</div>
+        <h1>This page has moved on.</h1>
+        <p>The page you're looking for doesn't exist or may have been moved. Let's get you back to exploring Dubai's premium office spaces.</p>
+        <div class="btns">
+            <a href="/" class="btn btn-primary"><i class="fas fa-home"></i> Back to Homepage</a>
+            <a href="/contact" class="btn btn-ghost"><i class="fas fa-comment"></i> Contact Us</a>
+        </div>
+        <div class="quick-links">
+            <a href="/serviced-office-dubai">Serviced Offices</a>·
+            <a href="/virtual-office-dubai">Virtual Office</a>·
+            <a href="/meeting-rooms-dubai">Meeting Rooms</a>·
+            <a href="/coworking-space-dubai">Coworking</a>·
+            <a href="/blog">Blog</a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    &copy; 2026 Hoomanix Business Center · Sheikh Zayed Road, Dubai · <a href="tel:+971504273434" data-cms-href="phone"><span data-cms="phone">+971 50 427 3434</span></a>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/content/settings.json').then(function(r){ return r.json(); }).then(function (data) {
+        document.querySelectorAll('[data-cms="phone"]').forEach(function(el){ el.textContent = data.phone_display; });
+        document.querySelectorAll('[data-cms-href="phone"]').forEach(function(el){ el.href = 'tel:' + data.phone_raw; });
+    }).catch(function(){});
+});
+</script>
+</body>
+</html>

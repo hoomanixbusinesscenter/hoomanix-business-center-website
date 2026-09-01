@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /thankyou
+Disallow: /thankyou.html
+Disallow: /darkcv
+Disallow: /darkcv.html
+
+Sitemap: https://hoomanix.com/sitemap.xml
