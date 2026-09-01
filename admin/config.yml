@@ -1,0 +1,41 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images-cms"
+public_folder: "/images-cms"
+
+collections:
+  - name: "settings"
+    label: "Site Contact Info (shows on every page)"
+    files:
+      - name: "settings"
+        label: "Contact Details"
+        file: "content/settings.json"
+        fields:
+          - { label: "Phone Number (display, e.g. +971 50 427 3434)", name: "phone_display", widget: "string" }
+          - { label: "Phone Number (numbers only, e.g. +971504273434)", name: "phone_raw", widget: "string" }
+          - { label: "Email — username part (before the @)", name: "email_user", widget: "string" }
+          - { label: "Email — domain part (after the @)", name: "email_domain", widget: "string" }
+          - { label: "Address / Location line", name: "address", widget: "string" }
+          - { label: "Business Hours text", name: "hours", widget: "string" }
+          - { label: "WhatsApp Number (numbers only, no + or spaces)", name: "whatsapp_number", widget: "string" }
+
+  - name: "home"
+    label: "Homepage Hero Section"
+    files:
+      - name: "home"
+        label: "Hero Content"
+        file: "content/home.json"
+        fields:
+          - { label: "Title — Line 1 (e.g. HOOMANIX)", name: "hero_title_line1", widget: "string" }
+          - { label: "Title — Line 2 (e.g. BUSINESS CENTER)", name: "hero_title_line2", widget: "string" }
+          - { label: "Description line under the address", name: "hero_description", widget: "text" }
+          - { label: "Primary Button Text", name: "hero_button_primary", widget: "string" }
+          - { label: "Secondary Button Text", name: "hero_button_secondary", widget: "string" }
+          - { label: "Stat 1 — Number (e.g. 500+)", name: "stat1_number", widget: "string" }
+          - { label: "Stat 1 — Label (e.g. Happy Clients)", name: "stat1_label", widget: "string" }
+          - { label: "Stat 2 — Number (e.g. 24/7)", name: "stat2_number", widget: "string" }
+          - { label: "Stat 2 — Label (e.g. Secure Access)", name: "stat2_label", widget: "string" }
+          - { label: "Stat 3 — Number (e.g. 5★)", name: "stat3_number", widget: "string" }
+          - { label: "Stat 3 — Label (e.g. Client Rating)", name: "stat3_label", widget: "string" }
