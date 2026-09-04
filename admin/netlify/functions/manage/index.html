@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoomanix — Manage Website</title>
+<style>
+  :root{--gold:#c8a15b;--dark:#1e1b16;--panel:#26221c;--text:#f3ece0;--muted:#a89c86;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--dark);color:var(--text);min-height:100vh;padding:24px}
+  .wrap{max-width:640px;margin:0 auto}
+  h1{font-size:1.5rem;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:.9rem;margin-bottom:28px}
+  .card{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:22px;margin-bottom:20px}
+  label{display:block;font-size:.85rem;color:var(--muted);margin:14px 0 6px}
+  label:first-child{margin-top:0}
+  input[type=text],input[type=password],textarea{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:#161310;color:var(--text);font-size:1rem;font-family:inherit}
+  textarea{resize:vertical;min-height:70px}
+  input:focus,textarea:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+  button{background:var(--gold);color:#161310;border:none;padding:13px 22px;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;width:100%}
+  button:disabled{opacity:.5}
+  button.secondary{background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--text)}
+  .msg{padding:12px 14px;border-radius:10px;font-size:.9rem;margin-bottom:16px;display:none}
+  .msg.error{background:#4a1f1f;color:#ffb3b3;display:block}
+  .msg.success{background:#1f3a24;color:#b6f0c1;display:block}
+  .section-title{font-size:1.05rem;font-weight:600;margin:0 0 14px;color:var(--gold)}
+  #app{display:none}
+  .hint{font-size:.75rem;color:var(--muted);margin-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Hoomanix Website</h1>
+  <div class="sub">Manage contact info &amp; homepage text</div>
+
+  <div id="msg" class="msg"></div>
+
+  <div id="login" class="card">
+    <label for="pw">Password</label>
+    <input type="password" id="pw" placeholder="Enter admin password">
+    <div style="margin-top:16px">
+      <button id="loginBtn">Login</button>
+    </div>
+  </div>
+
+  <div id="app">
+    <div class="card">
+      <div class="section-title">Contact Info (shows on every page)</div>
+      <label>Phone (display) <span class="hint">e.g. +971 50 427 3434</span></label>
+      <input type="text" id="phone_display">
+      <label>Phone (numbers only) <span class="hint">e.g. +971504273434</span></label>
+      <input type="text" id="phone_raw">
+      <label>Email — username part <span class="hint">before the @</span></label>
+      <input type="text" id="email_user">
+      <label>Email — domain part <span class="hint">after the @</span></label>
+      <input type="text" id="email_domain">
+      <label>Address</label>
+      <input type="text" id="address">
+      <label>Business Hours</label>
+      <input type="text" id="hours">
+      <label>WhatsApp Number <span class="hint">numbers only</span></label>
+      <input type="text" id="whatsapp_number">
+      <div style="margin-top:18px">
+        <button id="saveSettingsBtn">Save Contact Info</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Homepage Hero Section</div>
+      <label>Title — Line 1</label>
+      <input type="text" id="hero_title_line1">
+      <label>Title — Line 2</label>
+      <input type="text" id="hero_title_line2">
+      <label>Description line</label>
+      <textarea id="hero_description"></textarea>
+      <label>Primary Button Text</label>
+      <input type="text" id="hero_button_primary">
+      <label>Secondary Button Text</label>
+      <input type="text" id="hero_button_secondary">
+      <label>Stat 1 — Number / Label</label>
+      <input type="text" id="stat1_number" style="margin-bottom:8px">
+      <input type="text" id="stat1_label">
+      <label>Stat 2 — Number / Label</label>
+      <input type="text" id="stat2_number" style="margin-bottom:8px">
+      <input type="text" id="stat2_label">
+      <label>Stat 3 — Number / Label</label>
+      <input type="text" id="stat3_number" style="margin-bottom:8px">
+      <input type="text" id="stat3_label">
+      <div style="margin-top:18px">
+        <button id="saveHomeBtn">Save Homepage Text</button>
+      </div>
+    </div>
+
+    <button class="secondary" id="logoutBtn">Log out</button>
+  </div>
+</div>
+
+<script>
+let PASSWORD = "";
+let settingsSha = "";
+let homeSha = "";
+
+const msgEl = document.getElementById('msg');
+function showMsg(text, type){
+  msgEl.textContent = text;
+  msgEl.className = 'msg ' + type;
+  setTimeout(()=>{ msgEl.className = 'msg'; }, 4000);
+}
+
+function fillForm(settings, home){
+  document.getElementById('phone_display').value = settings.phone_display || '';
+  document.getElementById('phone_raw').value = settings.phone_raw || '';
+  document.getElementById('email_user').value = settings.email_user || '';
+  document.getElementById('email_domain').value = settings.email_domain || '';
+  document.getElementById('address').value = settings.address || '';
+  document.getElementById('hours').value = settings.hours || '';
+  document.getElementById('whatsapp_number').value = settings.whatsapp_number || '';
+
+  document.getElementById('hero_title_line1').value = home.hero_title_line1 || '';
+  document.getElementById('hero_title_line2').value = home.hero_title_line2 || '';
+  document.getElementById('hero_description').value = home.hero_description || '';
+  document.getElementById('hero_button_primary').value = home.hero_button_primary || '';
+  document.getElementById('hero_button_secondary').value = home.hero_button_secondary || '';
+  document.getElementById('stat1_number').value = home.stat1_number || '';
+  document.getElementById('stat1_label').value = home.stat1_label || '';
+  document.getElementById('stat2_number').value = home.stat2_number || '';
+  document.getElementById('stat2_label').value = home.stat2_label || '';
+  document.getElementById('stat3_number').value = home.stat3_number || '';
+  document.getElementById('stat3_label').value = home.stat3_label || '';
+}
+
+async function login(){
+  const pwInput = document.getElementById('pw').value;
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = 'Checking...';
+  try {
+    const res = await fetch('/.netlify/functions/get-content', {
+      method: 'POST',
+      body: JSON.stringify({ password: pwInput })
+    });
+    const data = await res.json();
+    if (!res.ok) { showMsg(data.error || 'Wrong password', 'error'); btn.disabled=false; btn.textContent='Login'; return; }
+
+    PASSWORD = pwInput;
+    settingsSha = data.settingsSha;
+    homeSha = data.homeSha;
+    fillForm(data.settings, data.home);
+
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  } catch (e) {
+    showMsg('Something went wrong. Try again.', 'error');
+    btn.disabled = false; btn.textContent = 'Login';
+  }
+}
+
+async function saveSettings(){
+  const btn = document.getElementById('saveSettingsBtn');
+  btn.disabled = true; btn.textContent = 'Saving...';
+  const content = {
+    phone_display: document.getElementById('phone_display').value,
+    phone_raw: document.getElementById('phone_raw').value,
+    email_user: document.getElementById('email_user').value,
+    email_domain: document.getElementById('email_domain').value,
+    address: document.getElementById('address').value,
+    hours: document.getElementById('hours').value,
+    whatsapp_number: document.getElementById('whatsapp_number').value
+  };
+  try {
+    const res = await fetch('/.netlify/functions/save-content', {
+      method: 'POST',
+      body: JSON.stringify({ password: PASSWORD, file: 'content/settings.json', content, sha: settingsSha })
+    });
+    const data = await res.json();
+    if (!res.ok) { showMsg(data.error || 'Save failed', 'error'); }
+    else { showMsg('Saved! Live site will update in about a minute.', 'success'); }
+  } catch(e) { showMsg('Something went wrong.', 'error'); }
+  btn.disabled = false; btn.textContent = 'Save Contact Info';
+}
+
+async function saveHome(){
+  const btn = document.getElementById('saveHomeBtn');
+  btn.disabled = true; btn.textContent = 'Saving...';
+  const content = {
+    hero_title_line1: document.getElementById('hero_title_line1').value,
+    hero_title_line2: document.getElementById('hero_title_line2').value,
+    hero_description: document.getElementById('hero_description').value,
+    hero_button_primary: document.getElementById('hero_button_primary').value,
+    hero_button_secondary: document.getElementById('hero_button_secondary').value,
+    stat1_number: document.getElementById('stat1_number').value,
+    stat1_label: document.getElementById('stat1_label').value,
+    stat2_number: document.getElementById('stat2_number').value,
+    stat2_label: document.getElementById('stat2_label').value,
+    stat3_number: document.getElementById('stat3_number').value,
+    stat3_label: document.getElementById('stat3_label').value
+  };
+  try {
+    const res = await fetch('/.netlify/functions/save-content', {
+      method: 'POST',
+      body: JSON.stringify({ password: PASSWORD, file: 'content/home.json', content, sha: homeSha })
+    });
+    const data = await res.json();
+    if (!res.ok) { showMsg(data.error || 'Save failed', 'error'); }
+    else { showMsg('Saved! Live site will update in about a minute.', 'success'); }
+  } catch(e) { showMsg('Something went wrong.', 'error'); }
+  btn.disabled = false; btn.textContent = 'Save Homepage Text';
+}
+
+document.getElementById('loginBtn').addEventListener('click', login);
+document.getElementById('pw').addEventListener('keydown', function(e){ if(e.key==='Enter') login(); });
+document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+document.getElementById('saveHomeBtn').addEventListener('click', saveHome);
+document.getElementById('logoutBtn').addEventListener('click', function(){
+  PASSWORD = '';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login').style.display = 'block';
+  document.getElementById('pw').value = '';
+});
+</script>
+</body>
+</html>
